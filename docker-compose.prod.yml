@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: moksh-mongodb-prod
+    restart: always # Keep it running even after server reboots
+    environment:
+      MONGO_INITDB_DATABASE: moksh-foundation
+    volumes:
+      - mongodb_data_prod:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  backend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/moksh-foundation/backend:latest # Replace with actual registry or local build
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: moksh-backend-prod
+    restart: always
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env.production
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - production_uploads:/app/uploads
+    networks:
+      - moksh-network-prod
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/moksh-foundation/frontend:latest # Replace with actual registry or local build
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: moksh-frontend-prod
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    networks:
+      - moksh-network-prod
+    env_file:
+      - ./frontend/.env.production
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mongodb_data_prod:
+    driver: local
+  production_uploads:
+    driver: local
+
+networks:
+  moksh-network-prod:
+    driver: bridge
