@@ -39,6 +39,43 @@ export default function Footer() {
                   Request Help
                 </Link>
               </li>
+              <li>
+                <Link to="/track-request" className="hover:text-white transition">
+                  Track Request
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Get Involved */}
+          <div>
+            <h4 className="font-semibold mb-4">Get Involved</h4>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li>
+                <Link to="/volunteer" className="hover:text-white transition">
+                  Volunteer With Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/ngo" className="hover:text-white transition">
+                  NGO Partners
+                </Link>
+              </li>
+              <li>
+                <Link to="/public-services" className="hover:text-white transition">
+                  Public Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:text-white transition">
+                  Create Account
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -47,41 +84,19 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <a href="#contact" className="hover:text-white transition">
-                  Contact Us
-                </a>
+                <Link to="/contact" className="hover:text-white transition">
+                  Contact Support
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
-                  FAQ
-                </a>
+                <Link to="/user/login" className="hover:text-white transition">
+                  User Login
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
-                  Donate
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Cookie Policy
-                </a>
+                <Link to="/login" className="hover:text-white transition">
+                  Admin Login
+                </Link>
               </li>
             </ul>
           </div>
