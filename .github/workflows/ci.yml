@@ -27,13 +27,13 @@ jobs:
     - name: Build and Lint Backend
       working-directory: ./backend
       run: |
-        npm ci
+        npm install
         npm run build
         npm run lint --if-present
 
     - name: Build and Lint Frontend
       working-directory: ./frontend
       run: |
-        npm ci
+        npm install
         npm run build
         npm run lint --if-present
